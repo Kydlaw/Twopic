@@ -13,7 +13,7 @@ from pandas import DataFrame, Series
 from tqdm import tqdm
 from twittenizer import Tokenizer
 
-from model import set_local_model
+from .model import set_local_model
 
 # Reduce logging output.
 logging.set_verbosity(logging.ERROR)
