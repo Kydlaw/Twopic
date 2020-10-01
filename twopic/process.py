@@ -13,7 +13,7 @@ from pandas import DataFrame, Series
 from tqdm import tqdm
 from twittenizer import Tokenizer
 
-from local_model import set_local_model
+from model import set_local_model
 
 # Reduce logging output.
 logging.set_verbosity(logging.ERROR)
@@ -91,7 +91,11 @@ class Dataset:
             return pd.read_csv(_path, header=0, names=columns_names, encoding="utf-8")
         elif _path.suffix == ".tsv":
             return pd.read_csv(
-                _path, sep="\t", header=0, names=columns_names, encoding="utf-8",
+                _path,
+                sep="\t",
+                header=0,
+                names=columns_names,
+                encoding="utf-8",
             )
 
     # TODO Replace with callback?
