@@ -18,6 +18,25 @@ from .model import set_local_model
 # Reduce logging output.
 logging.set_verbosity(logging.ERROR)
 
+"""
+    Code example:
+
+    model = Model()
+
+    target = Dataset(
+        "data/english.csv", ["tweet_id", "text", "source", "type", "label"]
+    )
+    target.preprocess_dataset(drop=["tweet_id", "source", "type", "label"])
+    source = Dataset("data/words.csv", ["words", "label", "labels"])
+    source.preprocess_dataset(
+        drop=["label"], stopwords=False, tokenize=False, lower=False, strip_labels=True
+    )
+    source.dataset.dropna(inplace=True)
+    vocab_target = Vocab(target, "text", is_tweets=True, thresh=5)
+    vocab_source = Vocab(source)
+    corr = Correlation(vocab_source, vocab_target, model)
+"""
+
 # *###########################
 # *--------- CLASSES ---------
 # *###########################
@@ -324,19 +343,3 @@ def get_unique_words(dataset: pd.DataFrame) -> List[List[str]]:
     vocab: List[List[str]] = [[word] for word in set(vocab_count.elements())]
 
     return vocab
-
-
-if __name__ == "__main__":
-    model = Model()
-    target = Dataset(
-        "data/english.csv", ["tweet_id", "text", "source", "type", "label"]
-    )
-    target.preprocess_dataset(drop=["tweet_id", "source", "type", "label"])
-    source = Dataset("data/words.csv", ["words", "label", "labels"])
-    source.preprocess_dataset(
-        drop=["label"], stopwords=False, tokenize=False, lower=False, strip_labels=True
-    )
-    source.dataset.dropna(inplace=True)
-    vocab_target = Vocab(target, "text", is_tweets=True, thresh=5)
-    vocab_source = Vocab(source)
-    corr = Correlation(vocab_source, vocab_target, model)
